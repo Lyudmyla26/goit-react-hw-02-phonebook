@@ -1,4 +1,4 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import propTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Button, Table, Phone } from './ContactForm.style';
