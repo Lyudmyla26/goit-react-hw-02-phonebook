@@ -20,16 +20,23 @@ export class App extends Component {
     });
   };
   addContact = newContact => {
+    const oldContact = this.state.contacts.find(
+      contact =>
+        contact.name.toLowerCase() === newContact.name.toLowerCase() ||
+        contact.number === newContact.number
+    );
+
+    if (oldContact) {
+      alert(`${oldContact.name} already exists`, {
+        autoClose: 3000,
+      });
+      return;
+    }
     this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, newContact],
       };
     });
-
-    if (this.state.contacts.name === newContact.name.value) {
-      alert(`${newContact.name} is already in contacts`);
-      return;
-    }
   };
   changeFilter = event => {
     this.setState({ filter: event.target.value });
