@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { ContactList } from './ContactList/ContactList.jsx';
 import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter.jsx';
+import { nanoid } from 'nanoid';
 export class App extends Component {
   state = {
     contacts: [
@@ -27,32 +28,32 @@ export class App extends Component {
     );
 
     if (oldContact) {
-      alert(`${oldContact.name} already exists`, {
-        autoClose: 3000,
-      });
+      alert(`${oldContact.name} already exists`);
       return;
     }
     this.setState(prevState => {
       return {
-        contacts: [...prevState.contacts, newContact],
+        contacts: [...prevState.contacts, { ...newContact, id: nanoid() }],
       };
     });
   };
   changeFilter = event => {
     this.setState({ filter: event.target.value });
   };
-  render() {
-    const { filter, contacts } = this.state;
-    const visibleContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+  getVisibleContacts = () =>
+    this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
+  render() {
+    const { filter } = this.state;
+    const visibleContacts = this.getVisibleContacts();
     return (
       <>
         <h1>Phonebook</h1>
         <ContactForm onAdd={this.addContact} />
 
         <h2>Contacts</h2>
-        <Filter filter={this.state.filter} onChange={this.changeFilter} />
+        <Filter filter={filter} onChange={this.changeFilter} />
         <ContactList contacts={visibleContacts} onDelete={this.handelDelete} />
       </>
     );

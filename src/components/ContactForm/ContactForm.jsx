@@ -2,7 +2,7 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import propTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Button, Table, Phone } from './ContactForm.style';
-import { nanoid } from 'nanoid';
+
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')
@@ -22,7 +22,7 @@ export const ContactForm = ({ onAdd }) => {
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, actions) => {
-        onAdd({ ...values, id: nanoid });
+        onAdd({ ...values });
         actions.resetForm();
       }}
     >
